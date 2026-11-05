@@ -388,7 +388,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-Built for the Stellar ecosystem with support from the Drips Wave program.
+Built for the Stellar ecosystem. NexaStellar intends to apply this repository to the Drips Wave program; approval is pending.
 
 ---
 
