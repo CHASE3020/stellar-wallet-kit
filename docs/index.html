@@ -7,9 +7,10 @@
   <title>Stellar Wallet Kit — Documentation</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="wallet-docs">
+  <a class="skip-link" href="#main-content">Skip to documentation</a>
   <header>
-    <p class="eyebrow">NexaStellar · Developer documentation</p>
+    <p class="eyebrow">NexaStellar / Frontend integrations</p>
     <h1>Stellar Wallet Kit</h1>
     <p>A TypeScript wallet-adapter prototype for connecting browser wallets, obtaining a public key, and signing Stellar transaction or Soroban authorization XDR.</p>
     <div class="badges"><span class="badge">TypeScript</span><span class="badge">Package v0.1.0</span><span class="badge">MIT</span></div>
@@ -21,7 +22,7 @@
       <a href="#config">Configuration</a><a href="#api">API reference</a><a href="#wallets">Wallet support</a>
       <a href="#events">Events &amp; network</a><a href="#errors">Errors &amp; safety</a><a href="#development">Development</a>
     </nav>
-    <main>
+    <main id="main-content">
       <section id="status">
         <h2>Implementation status</h2>
         <div class="callout warning"><strong>Prototype: verify package completeness before adopting.</strong> The checked-in implementation contains the core class and browser adapters for Freighter, Albedo, and Rabet. WalletConnect is a placeholder that throws “implementation pending.” React providers/hooks, UI components, and test utilities mentioned in the repository README are not present in the current source tree.</div>
