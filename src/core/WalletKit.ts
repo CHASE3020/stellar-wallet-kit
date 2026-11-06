@@ -19,8 +19,16 @@ export class WalletKit {
   private currentWallet: BaseWallet | null = null;
   private eventListeners: Map<WalletEvent, Set<Function>> = new Map();
   private server: Horizon.Server;
+  /** Network the kit was created with; custom endpoints only apply to it. */
+  private readonly overridesNetwork: NetworkType;
+  private readonly customHorizonUrl?: string;
+  private readonly customSorobanRpcUrl?: string;
 
   constructor(config: WalletKitConfig) {
+    this.overridesNetwork = config.network;
+    this.customHorizonUrl = config.horizonUrl;
+    this.customSorobanRpcUrl = config.sorobanRpcUrl;
+
     this.config = {
       network: config.network,
       projectName: config.projectName,
@@ -29,8 +37,8 @@ export class WalletKit {
       autoConnect: config.autoConnect ?? true,
       autoApprove: config.autoApprove ?? false,
       walletConnectProjectId: config.walletConnectProjectId || '',
-      horizonUrl: config.horizonUrl || this.getDefaultHorizonUrl(config.network),
-      sorobanRpcUrl: config.sorobanRpcUrl || this.getDefaultSorobanUrl(config.network),
+      horizonUrl: this.resolveHorizonUrl(config.network),
+      sorobanRpcUrl: this.resolveSorobanUrl(config.network),
     };
 
     this.server = new Horizon.Server(this.config.horizonUrl);
@@ -195,12 +203,26 @@ export class WalletKit {
   }
 
   /**
+   * Get the Horizon URL currently in use
+   */
+  getHorizonUrl(): string {
+    return this.config.horizonUrl;
+  }
+
+  /**
+   * Get the Soroban RPC URL currently in use
+   */
+  getSorobanRpcUrl(): string {
+    return this.config.sorobanRpcUrl;
+  }
+
+  /**
    * Switch network
    */
   async switchNetwork(network: NetworkType): Promise<void> {
     this.config.network = network;
-    this.config.horizonUrl = this.getDefaultHorizonUrl(network);
-    this.config.sorobanRpcUrl = this.getDefaultSorobanUrl(network);
+    this.config.horizonUrl = this.resolveHorizonUrl(network);
+    this.config.sorobanRpcUrl = this.resolveSorobanUrl(network);
     this.server = new Horizon.Server(this.config.horizonUrl);
 
     if (this.currentWallet) {
@@ -292,6 +314,28 @@ export class WalletKit {
         localStorage.removeItem('nexastellar_wallet_type');
       }
     }
+  }
+
+  /**
+   * Resolve the Horizon URL for a network, honoring custom overrides
+   * supplied for the network the kit was created with.
+   */
+  private resolveHorizonUrl(network: NetworkType): string {
+    if (network === this.overridesNetwork && this.customHorizonUrl) {
+      return this.customHorizonUrl;
+    }
+    return this.getDefaultHorizonUrl(network);
+  }
+
+  /**
+   * Resolve the Soroban RPC URL for a network, honoring custom overrides
+   * supplied for the network the kit was created with.
+   */
+  private resolveSorobanUrl(network: NetworkType): string {
+    if (network === this.overridesNetwork && this.customSorobanRpcUrl) {
+      return this.customSorobanRpcUrl;
+    }
+    return this.getDefaultSorobanUrl(network);
   }
 
   /**
