@@ -381,10 +381,12 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🔗 Links
 
-- [Documentation](https://docs.nexastellar.dev/wallet-kit)
+- [Developer documentation](https://nexastellar.github.io/stellar-wallet-kit/)
 - [Examples](https://github.com/NexaStellar/stellar-wallet-kit/tree/main/examples)
 - [NPM Package](https://www.npmjs.com/package/@nexastellar/wallet-kit)
 - [Report Issues](https://github.com/NexaStellar/stellar-wallet-kit/issues)
+
+The documentation site is maintained in [`docs/`](docs/). GitHub Pages must be enabled with **GitHub Actions** as the build and deployment source.
 
 ## 🙏 Acknowledgments
 
